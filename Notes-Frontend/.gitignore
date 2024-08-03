@@ -1,0 +1,11 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables file
+.env
+
+.parcel-cache/
+
+dist/
+
+package-lock.json
