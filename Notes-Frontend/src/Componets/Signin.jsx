@@ -39,7 +39,7 @@ const Signin = () => {
                     "Email is already registered. Redirecting to login page..."
                 );
                 setIsLoading(true);
-                setIsEmailExist(true); //isEmailExist = true
+                setIsEmailExist(true);
                 setTimeout(() => {
                     setIsLoading(false);
                     navigate("/login");

@@ -27,13 +27,17 @@ const Login = () => {
             });
             console.log("User Details:", getUserAndToken.data.user);
             console.log("User Token Details:", getUserAndToken.data.token);
+
+            //set the token to localstorage and navigate to "AllNotesByID" component
+
+            localStorage.setItem("token", getUserAndToken.data.token);
+            localStorage.setItem("userID", getUserAndToken.data.user._id);
+
+            navigate("/notes");
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 if (error.response.data.message === "User not found") {
                     setMessage("User not found");
-                    setTimeout(() => {
-                        navigate("/");
-                    }, 2000);
                 } else if (
                     error.response.data.message === "Incorrect Password"
                 ) {
@@ -53,7 +57,7 @@ const Login = () => {
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-center">Log In</h2>
                 {message && (
-                    <div className="text-center text-green-500">{message}</div>
+                    <div className="text-center text-red-800">{message}</div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>

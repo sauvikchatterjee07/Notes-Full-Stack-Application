@@ -2,7 +2,7 @@ import React from "react";
 import { ColorRing } from "react-loader-spinner";
 
 const Spinner = (isEmailExist) => {
-    console.log("from spinner", isEmailExist);
+    console.log("from spinner", isEmailExist); //false
 
     return isEmailExist === true ? (
         <div className="flex flex-col items-center justify-center space-y-4">
