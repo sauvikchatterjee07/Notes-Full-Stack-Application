@@ -61,12 +61,12 @@ async function getNoteByNoteId(req, res) {
     }
 }
 
-
 async function updateNote(req, res) {
     const { nid } = req.params;
 
     // Validate ObjectId
-    if (!mongoose.Types.ObjectId.isValid(nid)) {  //This checks if the provided nid is a valid ObjectId. If it's    not valid, it returns a 400 status with a message "Invalid Note ID".
+    if (!mongoose.Types.ObjectId.isValid(nid)) {
+        //This checks if the provided nid is a valid ObjectId. If it's    not valid, it returns a 400 status with a message "Invalid Note ID".
         return res.status(400).send({ message: "Invalid Note ID" });
     }
 
@@ -94,8 +94,6 @@ async function updateNote(req, res) {
     }
 }
 
-
-
 async function deleteNote(req, res) {
     const { nid } = req.params;
 
@@ -105,13 +103,15 @@ async function deleteNote(req, res) {
     }
 
     try {
-        const deletedNote = await Note.findByIdAndDelete(nid);
+        const isNoteDeleted = await Note.findByIdAndDelete(nid);
 
-        if (!deletedNote) {
+        console.log(isNoteDeleted);
+
+        if (!isNoteDeleted) {
             return res.status(404).send({ message: "Note not found" });
         }
 
-        res.send({ message: "Note deleted successfully", note: deletedNote });
+        res.send({ message: "Note deleted successfully", note: isNoteDeleted });
     } catch (error) {
         console.error("Error deleting note:", error.message);
         res.status(500).send({ message: "Server error" });
@@ -131,10 +131,15 @@ async function deleteNotesByUserId(req, res) {
         const result = await Note.deleteMany({ userID: userId });
 
         if (result.deletedCount === 0) {
-            return res.status(404).send({ message: "No notes found for this user" });
+            return res
+                .status(404)
+                .send({ message: "No notes found for this user" });
         }
 
-        res.send({ message: "Notes deleted successfully", deletedCount: result.deletedCount });
+        res.send({
+            message: "Notes deleted successfully",
+            deletedCount: result.deletedCount,
+        });
     } catch (error) {
         // If there's an error, log it and send a 500 error response
         console.error("Error deleting notes:", error.message);
@@ -149,12 +154,8 @@ module.exports = {
     getNoteByNoteId,
     updateNote,
     deleteNote,
-    deleteNotesByUserId
+    deleteNotesByUserId,
 };
-
-
-
-
 
 // try {
 //     const { title, content } = req.body;
@@ -179,4 +180,3 @@ module.exports = {
 // } catch (error) {
 //     res.status(500).send(error);
 // }
-
