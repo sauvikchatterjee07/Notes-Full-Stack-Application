@@ -105,8 +105,6 @@ async function deleteNote(req, res) {
     try {
         const isNoteDeleted = await Note.findByIdAndDelete(nid);
 
-        console.log(isNoteDeleted);
-
         if (!isNoteDeleted) {
             return res.status(404).send({ message: "Note not found" });
         }
@@ -156,27 +154,3 @@ module.exports = {
     deleteNote,
     deleteNotesByUserId,
 };
-
-// try {
-//     const { title, content } = req.body;
-//     const note = await Note.findOneAndUpdate(
-//         { _id: req.params.id, userId: req.user._id },
-//         { title, content },
-//         { new: true }
-//     );
-//     if (!note) return res.status(404).send("Note not found");
-//     res.send(note);
-// } catch (error) {
-//     res.status(500).send(error);
-// }
-
-// try {
-//     const note = await Note.findOneAndDelete({
-//         _id: req.params.id,
-//         userId: req.user._id,
-//     });
-//     if (!note) return res.status(404).send("Note not found");
-//     res.send(note);
-// } catch (error) {
-//     res.status(500).send(error);
-// }

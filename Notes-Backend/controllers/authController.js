@@ -23,8 +23,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
-    console.log(typeof { email, password });
-
     const user = await User.findOne({ email });
     if (!user) return res.status(400).send({ message: "User not found" });
     const isMatch = await bcrypt.compare(password, user.password);
