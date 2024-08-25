@@ -31,10 +31,7 @@ const Signin = () => {
                 { email: formData.email }
             );
 
-            console.log(emailCheckResponse.data.exists); //f
-
             if (emailCheckResponse.data.exists) {
-                //f
                 setMessage(
                     "Email is already registered. Redirecting to login page..."
                 );
@@ -45,12 +42,10 @@ const Signin = () => {
                     navigate("/login");
                 }, 5000);
             } else {
-                // Proceed with registration
                 const response = await axios.post(
                     "http://localhost:3000/api/auth/register",
                     formData
                 );
-                console.log(response.data);
                 setMessage("User Registration Successful");
                 setIsLoading(true);
                 setTimeout(() => {
@@ -69,8 +64,13 @@ const Signin = () => {
             <Spinner isEmailExist={isEmailExist} />
         </div>
     ) : (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <div
+            className="flex items-center justify-center min-h-screen bg-cover bg-center"
+            style={{
+                backgroundImage: `url('public/resources/signin.jpeg')`,
+            }}
+        >
+            <div className="w-full max-w-md p-8 space-y-6 bg-white bg-opacity-80 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-center">Sign In</h2>
                 {message && (
                     <div

@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import { BASE_NOTES_URL } from "../constants/constants";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import NewNoteForm from "./NewNoteForm";
+import Navbar from "./Navbar";
+import Spinner from "./Spinner";
 
 const AllNotesByID = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [notes, setNotes] = useState([]);
     const [editNoteVars, setEditNoteVars] = useState({
         noteId: null,
@@ -58,14 +61,20 @@ const AllNotesByID = () => {
         }
     }, [userID, token]);
 
-    return (
+    return isLoading ? (
+        <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+            <Spinner />
+        </div>
+    ) : (
         <>
+            <div>
+                <Navbar isLoading={isLoading} setIsLoading={setIsLoading} />
+            </div>
             <NewNoteForm
                 setNotes={setNotes}
                 editNoteVars={editNoteVars}
                 setEditNoteVars={setEditNoteVars}
             />
-
             <div className="container mx-auto p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {notes.map((note) => (
